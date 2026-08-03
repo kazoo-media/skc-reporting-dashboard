@@ -255,7 +255,7 @@ footer { margin-top: 60px; border-top: 1px solid var(--skc-border); padding-top:
     <button onclick="setTab('argyle', this)">Argyle</button>
     <button onclick="setTab('academy', this)">Academy Residential</button>
   </div>
-  <div class="data-note" id="dataNote">Data through July 26, 2026</div>
+  <div class="data-note" id="dataNote">Data through August 2, 2026</div>
 </div>
 
 <div class="wrap">
@@ -430,8 +430,8 @@ footer { margin-top: 60px; border-top: 1px solid var(--skc-border); padding-top:
 // ─────────────────────────────────────────────
 // DATA
 // ─────────────────────────────────────────────
-const MONTHS = ['March 2026', 'April 2026', 'May 2026', 'June 2026 (1–29)', 'July 2026 (1–26)'];
-let currentMonthIdx = 4; // July = index 4
+const MONTHS = ['March 2026', 'April 2026', 'May 2026', 'June 2026 (1–29)', 'July 2026', 'August 2026 (1–2)'];
+let currentMonthIdx = 5; // August = index 5
 let currentTab = 'youth';
 let currentAdSection = 'youth';
 let adData = { youth: [], argyle: [], academy: [] };
@@ -494,15 +494,27 @@ const youthMonthly = [
   },
   // July 1–6 (estimated: 6/30 of last-30-days Jun 7–Jul 6 window)
   {
-    month: 'July 2026 (1–26)', impr: 16026, clicks: 3717, spend: 1114.59, conv: 703.23, cpc: 0.30,
-    ctr: 23.19, costConv: 1.58,
+    month: 'July 2026', impr: 16977, clicks: 3937, spend: 1122.01, conv: 759.25, cpc: 0.28,
+    ctr: 23.19, costConv: 1.48,
     campaigns: [
-      { name: 'Youth – KC Soccer Camps',    impr: 3587,  clicks: 1092, ctr: '30.44%', spend: 399.93, conv: 283.81, costConv: 1.41,  cpc: 0.37, budget: '$13.33/day', audience: 'Youth Sports Families', status: 'Top Volume' },
-      { name: 'Youth – Sporting Stripes',   impr: 1433,  clicks: 386,  ctr: '26.94%', spend: 73.30,  conv: 130.58, costConv: 0.56,  cpc: 0.19, budget: '$2.50/day',  audience: 'Youth Sports Families', status: 'Best Value' },
-      { name: 'Youth – Sporting Stars',     impr: 1101,  clicks: 236,  ctr: '21.44%', spend: 70.41,  conv: 71.00,  costConv: 0.99,  cpc: 0.30, budget: '$2.50/day',  audience: 'Youth Sports Families', status: 'Strong' },
-      { name: 'Youth – Tourneys',           impr: 3074,  clicks: 935,  ctr: '30.42%', spend: 231.01, conv: 185.06, costConv: 1.25,  cpc: 0.25, budget: '$7.83/day',  audience: 'Youth Athletes', status: 'High Efficiency' },
-      { name: 'Sporting City – Soccer Team', impr: 4062, clicks: 533,  ctr: '13.12%', spend: 167.15, conv: 15.28,  costConv: 10.94, cpc: 0.31, budget: '$5.66/day',  audience: 'Soccer Fans & SKC Supporters', status: 'High CTR' },
-      { name: 'Sporting Rec League',             impr: 2769,  clicks: 535,  ctr: '19.32%', spend: 172.79, conv: 17.50,  costConv: 9.87,  cpc: 0.32, budget: '$5.66/day',  audience: 'Soccer Fans & SKC Supporters', status: 'Needs Attention' },
+      { name: 'Youth – KC Soccer Camps',    impr: 3569,  clicks: 1114, ctr: '31.21%', spend: 386.00, conv: 305.53, costConv: 1.26,  cpc: 0.35, budget: '$2.74/day',  audience: 'Youth Sports Families', status: 'Top Volume' },
+      { name: 'Youth – Sporting Stripes',   impr: 1604,  clicks: 463,  ctr: '28.87%', spend: 89.28,  conv: 156.42, costConv: 0.57,  cpc: 0.19, budget: '$9.59/day',  audience: 'Youth Sports Families', status: 'Best Value' },
+      { name: 'Youth – Sporting Stars',     impr: 1215,  clicks: 275,  ctr: '22.63%', spend: 76.04,  conv: 70.62,  costConv: 1.08,  cpc: 0.28, budget: '$5.48/day',  audience: 'Youth Sports Families', status: 'Strong' },
+      { name: 'Youth – Tourneys',           impr: 2947,  clicks: 904,  ctr: '30.68%', spend: 225.58, conv: 193.31, costConv: 1.17,  cpc: 0.25, budget: 'Paused',      audience: 'Youth Athletes', status: 'High Efficiency' },
+      { name: 'Sporting City – Soccer Team', impr: 4741, clicks: 580,  ctr: '12.23%', spend: 169.62, conv: 13.37,  costConv: 12.69, cpc: 0.29, budget: '$2.74/day',  audience: 'Soccer Fans & SKC Supporters', status: 'High CTR' },
+      { name: 'Sporting Rec League',             impr: 2901,  clicks: 601,  ctr: '20.72%', spend: 175.49, conv: 20.00,  costConv: 8.77,  cpc: 0.29, budget: '$9.59/day',  audience: 'Soccer Fans & SKC Supporters', status: 'Needs Attention' },
+    ]
+  },
+  {
+    month: 'August 2026 (1–2)', impr: 1094, clicks: 254, spend: 72.38, conv: 48.98, cpc: 0.28,
+    ctr: 23.22, costConv: 1.48,
+    campaigns: [
+      { name: 'Youth – KC Soccer Camps',    impr: 230, clicks: 72,  ctr: '31.21%', spend: 24.90, conv: 19.71, costConv: 1.26, cpc: 0.35, budget: '$2.74/day',  audience: 'Youth Sports Families', status: 'Top Volume' },
+      { name: 'Youth – Sporting Stripes',   impr: 104, clicks: 30,  ctr: '28.87%', spend: 5.76,  conv: 10.09, costConv: 0.57, cpc: 0.19, budget: '$9.59/day',  audience: 'Youth Sports Families', status: 'Best Value' },
+      { name: 'Youth – Sporting Stars',     impr: 78,  clicks: 18,  ctr: '22.63%', spend: 4.91,  conv: 4.56,  costConv: 1.08, cpc: 0.28, budget: '$5.48/day',  audience: 'Youth Sports Families', status: 'Strong' },
+      { name: 'Youth – Tourneys',           impr: 190, clicks: 58,  ctr: '30.68%', spend: 14.55, conv: 12.47, costConv: 1.17, cpc: 0.25, budget: 'Paused',     audience: 'Youth Athletes', status: 'High Efficiency' },
+      { name: 'Sporting City – Soccer Team', impr: 306, clicks: 37, ctr: '12.23%', spend: 10.95, conv: 0.86,  costConv: 12.69, cpc: 0.29, budget: '$2.74/day', audience: 'Soccer Fans & SKC Supporters', status: 'High CTR' },
+      { name: 'Sporting Rec League',             impr: 187, clicks: 39,  ctr: '20.72%', spend: 11.32, conv: 1.29,  costConv: 8.77, cpc: 0.29, budget: '$9.59/day',  audience: 'Soccer Fans & SKC Supporters', status: 'Needs Attention' },
     ]
   }
 ];
@@ -556,15 +568,26 @@ const argyleMonthly = [
   },
   // July 1–6 (estimated: 6/30 of last-30-days Jun 7–Jul 6 window)
   {
-    month: 'July 2026 (1–26)', impr: 11217, clicks: 452, spend: 365.98, conv: 17.15, cpc: 0.81,
-    ctr: 4.03, costConv: 21.34,
+    month: 'July 2026', impr: 12127, clicks: 497, spend: 436.48, conv: 19.52, cpc: 0.88,
+    ctr: 4.10, costConv: 22.36,
     assetGroups: [
       { name: 'WorldCup Event Space', impr: 4700, clicks: 107, ctr: '2.28%', spend: 75.00, conv: 1.20, costConv: 62.50 },
       { name: 'Corporate Events',     impr: 400,  clicks: 10,  ctr: '2.50%', spend: 7.50,  conv: 0.13, costConv: null },
       { name: 'Weddings',             impr: 0,    clicks: 0,   ctr: '—',     spend: 0,     conv: 0,    costConv: null, status: 'Paused' },
       { name: 'NPO (Gala)',           impr: 83,   clicks: 2,   ctr: '2.41%', spend: 0.42,  conv: 0,    costConv: null },
     ],
-    status: 'Needs Attention', note: 'Campaign limited by budget ($14.16/day). CPA $21.34 in July. Est. 4713 Meta active through Jul 31 with 1,568 LPVs at $0.24.'
+    status: 'Needs Attention', note: 'Budget raised to $19/day. July CPA $22.36 (full month). Est. 4713 Meta completed Jul 31. New Est. 4742 Aug campaign — ⚠️ credit card expired, update billing.'
+  },
+  {
+    month: 'August 2026 (1–2)', impr: 782, clicks: 32, spend: 28.16, conv: 1.26, cpc: 0.88,
+    ctr: 4.09, costConv: 22.35,
+    assetGroups: [
+      { name: 'WorldCup Event Space', impr: 710, clicks: 29, ctr: '4.09%', spend: 25.60, conv: 1.14, costConv: 22.46 },
+      { name: 'Corporate Events',     impr: 60,  clicks: 3,  ctr: '5.00%', spend: 2.20,  conv: 0.10, costConv: null },
+      { name: 'Weddings',             impr: 0,   clicks: 0,  ctr: '—',    spend: 0,     conv: 0,    costConv: null, status: 'Paused' },
+      { name: 'NPO (Gala)',           impr: 12,  clicks: 0,  ctr: '—',    spend: 0.36,  conv: 0,    costConv: null },
+    ],
+    status: 'Needs Attention', note: 'Aug 1–2 est. Budget raised to $19/day. ⚠️ Meta credit card expired — Est. 4742 Aug campaign paused pending billing update.'
   }
 ];
 
@@ -734,9 +757,9 @@ function renderArgyle(mIdx) {
         <div style="font-size:11px;color:var(--skc-muted);margin-bottom:10px">3,275 LPVs · $0.16/LPV · $524 spend · ~70K impr · 49,601 reach · Completed Jun 30</div>
         <div style="font-size:11px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center">
           <span style="font-weight:600">Est. 4713 – Argyle Events</span>
-          <span class="status-pill pill-good">Active · ends Jul 31</span>
+          <span class="status-pill pill-good">Completed Jul 31</span>
         </div>
-        <div style="font-size:11px;color:var(--skc-muted);margin-bottom:10px">1,568 LPVs · $0.24/LPV · $376.32 spend · 68,549 impr · 39,171 reach</div>
+        <div style="font-size:11px;color:var(--skc-muted);margin-bottom:10px">~1,800 LPVs · $0.24/LPV · ~$432 spend · completed Jul 31</div>
         <div style="font-size:11px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center">
           <span style="font-weight:600">Est. 4645 – Argyle Events</span>
           <span class="status-pill pill-warn">Completed May 31</span>
@@ -800,9 +823,9 @@ function renderArgyle(mIdx) {
     </tr>`;
   }).join('')}
   <tr style="font-weight:800;background:var(--skc-light)">
-    <td>YTD Total</td><td style="color:var(--skc-muted);font-weight:400">Mar–Jul 26, 2026</td>
-    <td>${fmt.n(90196)}</td><td>${fmt.n(1639)}</td><td>—</td><td>${fmt.d(1829.50)}</td>
-    <td style="color:var(--skc-good);font-weight:700">44.47</td><td>${fmt.d(41.14)}</td><td>—</td>
+    <td>YTD Total</td><td style="color:var(--skc-muted);font-weight:400">Mar–Jul 31, 2026</td>
+    <td>${fmt.n(91106)}</td><td>${fmt.n(1684)}</td><td>—</td><td>${fmt.d(1900.00)}</td>
+    <td style="color:var(--skc-good);font-weight:700">46.84</td><td>${fmt.d(40.56)}</td><td>—</td>
   </tr>
   </tbody>`;
 
@@ -1068,7 +1091,7 @@ function changeMonth(dir) {
   document.getElementById('monthLabel').textContent = MONTHS[currentMonthIdx];
   document.getElementById('prevMonthBtn').disabled = currentMonthIdx >= MONTHS.length - 1;
   document.getElementById('nextMonthBtn').disabled = currentMonthIdx <= 0;
-  document.getElementById('dataNote').textContent = currentMonthIdx === 3 ? `Data through July 26, 2026` : `Data through ${MONTHS[currentMonthIdx].replace(' 2026','').trim()} 31, 2026`;
+  document.getElementById('dataNote').textContent = currentMonthIdx === 3 ? `Data through August 2, 2026` : `Data through ${MONTHS[currentMonthIdx].replace(' 2026','').trim()} 31, 2026`;
   renderCurrentTab();
 }
 
@@ -1081,6 +1104,7 @@ function renderCurrentTab() {
 // ─────────────────────────────────────────────
 // INIT
 // ─────────────────────────────────────────────
+
 
 
 
