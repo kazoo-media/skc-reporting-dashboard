@@ -255,7 +255,7 @@ footer { margin-top: 60px; border-top: 1px solid var(--skc-border); padding-top:
     <button onclick="setTab('argyle', this)">Argyle</button>
     <button onclick="setTab('academy', this)">Academy Residential</button>
   </div>
-  <div class="data-note" id="dataNote">Data through August 2, 2026</div>
+  <div class="data-note" id="dataNote">Data through August 10, 2026</div>
 </div>
 
 <div class="wrap">
@@ -315,8 +315,17 @@ footer { margin-top: 60px; border-top: 1px solid var(--skc-border); padding-top:
 
   <!-- MOM Table -->
   <div class="mom-section">
-    <div class="mom-header"><h3>📊 Month-over-Month Summary — Argyle – 2026</h3></div>
-    <div class="mom-body"><table class="mom-table" id="argyle-mom-table"></table></div>
+    <div class="mom-header" style="justify-content:space-between;align-items:center">
+      <h3>📊 Month-over-Month Summary — Argyle – 2026</h3>
+      <div style="display:flex;gap:6px;flex-shrink:0">
+        <button id="argyle-mom-tab-google" onclick="switchArgyleMomTab('google')" style="background:#fff;color:#0C2340;border:none;padding:5px 14px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s">Google Ads</button>
+        <button id="argyle-mom-tab-meta" onclick="switchArgyleMomTab('meta')" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.5);padding:5px 14px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s">Meta</button>
+      </div>
+    </div>
+    <div class="mom-body">
+      <table class="mom-table" id="argyle-mom-table"></table>
+      <table class="mom-table" id="argyle-mom-meta-table" style="display:none"></table>
+    </div>
   </div>
 
   <!-- Chart -->
@@ -430,7 +439,7 @@ footer { margin-top: 60px; border-top: 1px solid var(--skc-border); padding-top:
 // ─────────────────────────────────────────────
 // DATA
 // ─────────────────────────────────────────────
-const MONTHS = ['March 2026', 'April 2026', 'May 2026', 'June 2026 (1–29)', 'July 2026', 'August 2026 (1–2)'];
+const MONTHS = ['March 2026', 'April 2026', 'May 2026', 'June 2026 (1–29)', 'July 2026', 'August 2026 (1–10)'];
 let currentMonthIdx = 5; // August = index 5
 let currentTab = 'youth';
 let currentAdSection = 'youth';
@@ -450,7 +459,7 @@ const youthMonthly = [
       { name: 'Youth – Sporting Stars',    impr: 5700,  clicks: 417,  ctr: '7.32%', spend: 146.50, conv: 29.02,  costConv: 5.05,  cpc: 0.35, budget: '$5.00/day',  opt: '93%', audience: 'Youth Sports Families', status: 'Strong' },
       { name: 'Youth – Tourneys',          impr: 3639,  clicks: 501,  ctr: '13.77%',spend: 85.93,  conv: 35.23,  costConv: 2.44,  cpc: 0.17, budget: '$2.83/day',  opt: '87%', audience: 'Youth Athletes', status: 'High Efficiency' },
       { name: 'Sporting City – Soccer Team',impr: 7412, clicks: 1270, ctr: '17.13%',spend: 167.86, conv: 15.9,   costConv: 10.56, cpc: 0.13, budget: '$5.66/day',  opt: '85%', audience: 'Soccer Fans & SKC Supporters', status: 'High CTR' },
-      { name: 'Sporting Rec League',        impr: 9370, clicks: 468,  ctr: '4.99%', spend: 163.71, conv: 8.78,   costConv: 18.65, cpc: 0.35, budget: '$5.66/day',  opt: '92%', audience: 'Soccer Fans & SKC Supporters', status: 'Needs Attention' },
+      { name: 'Sporting Rec League',        impr: 9370, clicks: 468,  ctr: '4.99%', spend: 163.71, conv: 8.78,   costConv: 18.65, cpc: 0.35, budget: '$5.66/day',  opt: '92%', audience: 'Soccer Fans & SKC Supporters', status: 'Optimizing' },
     ]
   },
   // April
@@ -463,7 +472,7 @@ const youthMonthly = [
       { name: 'Youth – Sporting Stars',     impr: 2272,  clicks: 468,  ctr: '20.60%', spend: 151.27, conv: 107.13, costConv: 1.41,  cpc: 0.32, budget: '$5.00/day',  opt: '100%', audience: 'Youth Sports Families', status: 'Strong' },
       { name: 'Youth – Tourneys',           impr: 2026,  clicks: 562,  ctr: '27.74%', spend: 84.10,  conv: 63.25,  costConv: 1.33,  cpc: 0.15, budget: '$2.83/day',  opt: '100%', audience: 'Youth Athletes', status: 'High Efficiency' },
       { name: 'Sporting City – Soccer Team', impr: 5947, clicks: 1479, ctr: '24.87%', spend: 170.50, conv: 43.75,  costConv: 3.90,  cpc: 0.12, budget: '$5.66/day',  opt: '89%', audience: 'Soccer Fans & SKC Supporters', status: 'High CTR' },
-      { name: 'Sporting Rec League',         impr: 16101,clicks: 400,  ctr: '2.48%',  spend: 169.76, conv: 13.14,  costConv: 12.92, cpc: 0.42, budget: '$5.66/day',  opt: '100%', audience: 'Soccer Fans & SKC Supporters', status: 'Needs Attention' },
+      { name: 'Sporting Rec League',         impr: 16101,clicks: 400,  ctr: '2.48%',  spend: 169.76, conv: 13.14,  costConv: 12.92, cpc: 0.42, budget: '$5.66/day',  opt: '100%', audience: 'Soccer Fans & SKC Supporters', status: 'Optimizing' },
     ]
   },
   // May
@@ -476,7 +485,7 @@ const youthMonthly = [
       { name: 'Youth – Sporting Stars',     impr: 2265,  clicks: 496,  ctr: '21.90%', spend: 152.24, conv: 124.65, costConv: 1.22,  cpc: 0.31, budget: '$5.00/day',  opt: '84%',  audience: 'Youth Sports Families', status: 'Strong' },
       { name: 'Youth – Tourneys',           impr: 1292,  clicks: 286,  ctr: '22.14%', spend: 82.91,  conv: 63.42,  costConv: 1.31,  cpc: 0.29, budget: '$2.83/day',  opt: '87%',  audience: 'Youth Athletes', status: 'High Efficiency' },
       { name: 'Sporting City – Soccer Team', impr: 6137, clicks: 2034, ctr: '33.14%', spend: 170.50, conv: 32.16,  costConv: 5.30,  cpc: 0.08, budget: '$5.66/day',  opt: '100%', audience: 'Soccer Fans & SKC Supporters', status: 'High CTR' },
-      { name: 'Sporting Rec League',         impr: 13180,clicks: 430,  ctr: '3.26%',  spend: 169.75, conv: 9.17,   costConv: 18.52, cpc: 0.39, budget: '$5.66/day',  opt: '100%', audience: 'Soccer Fans & SKC Supporters', status: 'Needs Attention' },
+      { name: 'Sporting Rec League',         impr: 13180,clicks: 430,  ctr: '3.26%',  spend: 169.75, conv: 9.17,   costConv: 18.52, cpc: 0.39, budget: '$5.66/day',  opt: '100%', audience: 'Soccer Fans & SKC Supporters', status: 'Optimizing' },
     ]
   },
   // June 1–22 (derived: YTD Jan–Jun23 minus Mar–May recap totals)
@@ -489,7 +498,7 @@ const youthMonthly = [
       { name: 'Youth – Sporting Stars',     impr: 1515,  clicks: 295,  ctr: '19.47%', spend: 110.02, conv: 84.07,  costConv: 1.31,  cpc: 0.37, budget: '$2.50/day',  audience: 'Youth Sports Families', status: 'Strong' },
       { name: 'Youth – Tourneys',           impr: 1744,  clicks: 420,  ctr: '24.08%', spend: 152.26, conv: 76.57,  costConv: 1.99,  cpc: 0.36, budget: '$7.83/day',  audience: 'Youth Athletes', status: 'High Efficiency' },
       { name: 'Sporting City – Soccer Team', impr: 4598, clicks: 1420, ctr: '30.88%', spend: 173.10, conv: 13.18,  costConv: 13.14, cpc: 0.12, budget: '$5.66/day',  audience: 'Soccer Fans & SKC Supporters', status: 'High CTR' },
-      { name: 'Sporting Rec League',             impr: 5414, clicks: 417,  ctr: '7.70%',  spend: 167.46, conv: 7.38,   costConv: 22.68, cpc: 0.40, budget: '$5.66/day',  audience: 'Soccer Fans & SKC Supporters', status: 'Needs Attention' },
+      { name: 'Sporting Rec League',             impr: 5414, clicks: 417,  ctr: '7.70%',  spend: 167.46, conv: 7.38,   costConv: 22.68, cpc: 0.40, budget: '$5.66/day',  audience: 'Soccer Fans & SKC Supporters', status: 'Optimizing' },
     ]
   },
   // July 1–6 (estimated: 6/30 of last-30-days Jun 7–Jul 6 window)
@@ -502,19 +511,19 @@ const youthMonthly = [
       { name: 'Youth – Sporting Stars',     impr: 1215,  clicks: 275,  ctr: '22.63%', spend: 76.04,  conv: 70.62,  costConv: 1.08,  cpc: 0.28, budget: '$5.48/day',  audience: 'Youth Sports Families', status: 'Strong' },
       { name: 'Youth – Tourneys',           impr: 2947,  clicks: 904,  ctr: '30.68%', spend: 225.58, conv: 193.31, costConv: 1.17,  cpc: 0.25, budget: 'Paused',      audience: 'Youth Athletes', status: 'High Efficiency' },
       { name: 'Sporting City – Soccer Team', impr: 4741, clicks: 580,  ctr: '12.23%', spend: 169.62, conv: 13.37,  costConv: 12.69, cpc: 0.29, budget: '$2.74/day',  audience: 'Soccer Fans & SKC Supporters', status: 'High CTR' },
-      { name: 'Sporting Rec League',             impr: 2901,  clicks: 601,  ctr: '20.72%', spend: 175.49, conv: 20.00,  costConv: 8.77,  cpc: 0.29, budget: '$9.59/day',  audience: 'Soccer Fans & SKC Supporters', status: 'Needs Attention' },
+      { name: 'Sporting Rec League',             impr: 2901,  clicks: 601,  ctr: '20.72%', spend: 175.49, conv: 20.00,  costConv: 8.77,  cpc: 0.29, budget: '$9.59/day',  audience: 'Soccer Fans & SKC Supporters', status: 'Optimizing' },
     ]
   },
   {
-    month: 'August 2026 (1–2)', impr: 1094, clicks: 254, spend: 72.38, conv: 48.98, cpc: 0.28,
-    ctr: 23.22, costConv: 1.48,
+    month: 'August 2026 (1–10)', impr: 4980, clicks: 1129, spend: 285.64, conv: 203.33, cpc: 0.25,
+    ctr: 22.67, costConv: 1.40,
     campaigns: [
-      { name: 'Youth – KC Soccer Camps',    impr: 230, clicks: 72,  ctr: '31.21%', spend: 24.90, conv: 19.71, costConv: 1.26, cpc: 0.35, budget: '$2.74/day',  audience: 'Youth Sports Families', status: 'Top Volume' },
-      { name: 'Youth – Sporting Stripes',   impr: 104, clicks: 30,  ctr: '28.87%', spend: 5.76,  conv: 10.09, costConv: 0.57, cpc: 0.19, budget: '$9.59/day',  audience: 'Youth Sports Families', status: 'Best Value' },
-      { name: 'Youth – Sporting Stars',     impr: 78,  clicks: 18,  ctr: '22.63%', spend: 4.91,  conv: 4.56,  costConv: 1.08, cpc: 0.28, budget: '$5.48/day',  audience: 'Youth Sports Families', status: 'Strong' },
-      { name: 'Youth – Tourneys',           impr: 190, clicks: 58,  ctr: '30.68%', spend: 14.55, conv: 12.47, costConv: 1.17, cpc: 0.25, budget: 'Paused',     audience: 'Youth Athletes', status: 'High Efficiency' },
-      { name: 'Sporting City – Soccer Team', impr: 306, clicks: 37, ctr: '12.23%', spend: 10.95, conv: 0.86,  costConv: 12.69, cpc: 0.29, budget: '$2.74/day', audience: 'Soccer Fans & SKC Supporters', status: 'High CTR' },
-      { name: 'Sporting Rec League',             impr: 187, clicks: 39,  ctr: '20.72%', spend: 11.32, conv: 1.29,  costConv: 8.77, cpc: 0.29, budget: '$9.59/day',  audience: 'Soccer Fans & SKC Supporters', status: 'Needs Attention' },
+      { name: 'Youth – KC Soccer Camps',    impr: 453,  clicks: 162, ctr: '35.76%', spend: 25.63, conv: 26.00, costConv: 0.99, cpc: 0.16, budget: '$2.74/day',  audience: 'Youth Sports Families', status: 'Top Volume' },
+      { name: 'Youth – Sporting Stripes',   impr: 1196, clicks: 308, ctr: '25.75%', spend: 91.09, conv: 103.33, costConv: 0.88, cpc: 0.30, budget: '$9.59/day',  audience: 'Youth Sports Families', status: 'Best Value' },
+      { name: 'Youth – Sporting Stars',     impr: 671,  clicks: 195, ctr: '29.06%', spend: 51.72, conv: 65.00,  costConv: 0.80, cpc: 0.27, budget: '$5.48/day',  audience: 'Youth Sports Families', status: 'Strong' },
+      { name: 'Youth – Tourneys',           impr: 0,    clicks: 0,   ctr: '—',      spend: 0,     conv: 0,      costConv: null, cpc: 0,    budget: 'Paused',     audience: 'Youth Athletes', status: 'Paused' },
+      { name: 'Sporting City – Soccer Team', impr: 952, clicks: 187, ctr: '19.64%', spend: 25.78, conv: 4.50,  costConv: 5.73, cpc: 0.14, budget: '$2.74/day',  audience: 'Soccer Fans & SKC Supporters', status: 'High CTR' },
+      { name: 'Sporting Rec League',        impr: 1709, clicks: 277, ctr: '16.21%', spend: 91.41, conv: 4.50,  costConv: 20.31, cpc: 0.33, budget: '$9.59/day', audience: 'Soccer Fans & SKC Supporters', status: 'Optimizing' },
     ]
   }
 ];
@@ -530,7 +539,7 @@ const argyleMonthly = [
       { name: 'Weddings',             impr: 0,     clicks: 0,   ctr: '—',     spend: 0,      conv: 0,    costConv: null, status: 'Paused' },
       { name: 'NPO (Gala)',           impr: 0,     clicks: 0,   ctr: '—',     spend: 0,      conv: 0,    costConv: null },
     ],
-    optScore: '79.7%', status: 'Needs Attention', note: 'Budget limited at $13/day — search impression share under 10%.'
+    optScore: '79.7%', status: 'Optimizing', note: 'Budget limited at $13/day — search impression share under 10%.'
   },
   {
     month: 'April 2026', impr: 10727, clicks: 205, spend: 389.05, conv: 12.47, cpc: 1.90,
@@ -564,7 +573,7 @@ const argyleMonthly = [
       { name: 'Weddings',             impr: 0,     clicks: 0,   ctr: '—',     spend: 0,      conv: 0,     costConv: null, status: 'Paused' },
       { name: 'NPO (Gala)',           impr: 477,   clicks: 11,  ctr: '2.31%', spend: 5.47,   conv: 0,     costConv: null },
     ],
-    status: 'Needs Attention', note: 'CPA rose to $75.78 in June — review WorldCup targeting. Tourneys budget increased to $7.83/day. New Meta campaign Est. 4713 scheduled Jul 31.'
+    status: 'Optimizing', note: 'CPA rose to $75.78 in June — review WorldCup targeting. Tourneys budget increased to $7.83/day. New Meta campaign Est. 4713 scheduled Jul 31.'
   },
   // July 1–6 (estimated: 6/30 of last-30-days Jun 7–Jul 6 window)
   {
@@ -576,18 +585,19 @@ const argyleMonthly = [
       { name: 'Weddings',             impr: 0,    clicks: 0,   ctr: '—',     spend: 0,     conv: 0,    costConv: null, status: 'Paused' },
       { name: 'NPO (Gala)',           impr: 83,   clicks: 2,   ctr: '2.41%', spend: 0.42,  conv: 0,    costConv: null },
     ],
-    status: 'Needs Attention', note: 'Budget raised to $19/day. July CPA $22.36 (full month). Est. 4713 Meta completed Jul 31. New Est. 4742 Aug campaign — ⚠️ credit card expired, update billing.'
+    status: 'Optimizing', note: 'Budget raised to $19/day. July CPA $22.36 (full month). Est. 4713 Meta completed Jul 31. New Est. 4742 Aug campaign launched.'
   },
   {
-    month: 'August 2026 (1–2)', impr: 782, clicks: 32, spend: 28.16, conv: 1.26, cpc: 0.88,
-    ctr: 4.09, costConv: 22.35,
+    month: 'August 2026 (1–10)', impr: 8124, clicks: 336, spend: 172.84, conv: 3.00, cpc: 0.51,
+    ctr: 4.14, costConv: 57.61,
     assetGroups: [
-      { name: 'WorldCup Event Space', impr: 710, clicks: 29, ctr: '4.09%', spend: 25.60, conv: 1.14, costConv: 22.46 },
-      { name: 'Corporate Events',     impr: 60,  clicks: 3,  ctr: '5.00%', spend: 2.20,  conv: 0.10, costConv: null },
-      { name: 'Weddings',             impr: 0,   clicks: 0,  ctr: '—',    spend: 0,     conv: 0,    costConv: null, status: 'Paused' },
-      { name: 'NPO (Gala)',           impr: 12,  clicks: 0,  ctr: '—',    spend: 0.36,  conv: 0,    costConv: null },
+      { name: 'Evergreen',            impr: 8124, clicks: 336, ctr: '4.14%', spend: 172.84, conv: 3.00, costConv: 57.61, status: 'Active' },
+      { name: 'WorldCup Event Space', impr: 0,    clicks: 0,   ctr: '—',     spend: 0,      conv: 0,    costConv: null,  status: 'Paused' },
+      { name: 'Corporate Events',     impr: 0,    clicks: 0,   ctr: '—',     spend: 0,      conv: 0,    costConv: null,  status: 'Paused' },
+      { name: 'Weddings',             impr: 0,    clicks: 0,   ctr: '—',     spend: 0,      conv: 0,    costConv: null,  status: 'Paused' },
+      { name: 'NPO (Gala)',           impr: 0,    clicks: 0,   ctr: '—',     spend: 0,      conv: 0,    costConv: null,  status: 'Paused' },
     ],
-    status: 'Needs Attention', note: 'Aug 1–2 est. Budget raised to $19/day. ⚠️ Meta credit card expired — Est. 4742 Aug campaign paused pending billing update.'
+    status: 'Optimizing', note: 'Evergreen is the only active asset group — all others paused. $19/day budget limited by budget cap. Est. 4742 Meta active.'
   }
 ];
 
@@ -598,6 +608,29 @@ const academyFull = {
   meta:    { impr: 153745, clicks: 4922, ctr: '3.20%', cpm: 5.50, spend: 846.07, reach: 62753, freq: 2.45, lpv: 3173, costLpv: 0.27, note: 'Lowest CPL — 3,173 landing page views at $0.27 each' },
   total:   { impr: 575235, clicks: 6083, spend: 4080.25, reach: 219344, lpv: 3173, ctr: '1.06%', cpm: 7.09 }
 };
+
+// ── ARGYLE META MONTHLY ──
+const argyleMetaMonthly = [
+  { month: 'March 2026',          campaign: '—',         lpv: 0,    reach: 0,      spend: 0,      cpl: null,  status: 'No campaign' },
+  { month: 'April 2026',          campaign: '—',         lpv: 0,    reach: 0,      spend: 0,      cpl: null,  status: 'No campaign' },
+  { month: 'May 2026',            campaign: 'Est. 4645', lpv: 99,   reach: 1630,   spend: 21.85,  cpl: 0.22,  status: 'Completed May 31' },
+  { month: 'June 2026 (1–29)',    campaign: 'Est. 4674', lpv: 3275, reach: 49601,  spend: 524.00, cpl: 0.16,  status: 'Completed Jun 30' },
+  { month: 'July 2026',           campaign: 'Est. 4713', lpv: 1207, reach: 32889,  spend: 289.68, cpl: 0.24,  status: 'Completed Jul 31' },
+  { month: 'August 2026 (1–10)', campaign: 'Est. 4742', lpv: 688,  reach: 21831,  spend: 178.88, cpl: 0.26,  status: 'Active' },
+];
+
+let currentArgyleMomTab = 'google';
+function switchArgyleMomTab(tab) {
+  currentArgyleMomTab = tab;
+  document.getElementById('argyle-mom-table').style.display = tab === 'google' ? '' : 'none';
+  document.getElementById('argyle-mom-meta-table').style.display = tab === 'meta' ? '' : 'none';
+  const gBtn = document.getElementById('argyle-mom-tab-google');
+  const mBtn = document.getElementById('argyle-mom-tab-meta');
+  gBtn.style.background = tab === 'google' ? '#fff' : 'transparent';
+  gBtn.style.color = tab === 'google' ? '#0C2340' : '#fff';
+  mBtn.style.background = tab === 'meta' ? '#fff' : 'transparent';
+  mBtn.style.color = tab === 'meta' ? '#0C2340' : '#fff';
+}
 
 // ─────────────────────────────────────────────
 // HELPERS
@@ -667,12 +700,13 @@ function renderYouth(mIdx) {
   // MOM Table
   const months = youthMonthly.map(m => m.month);
   const tbl = document.getElementById('youth-mom-table');
+  const sepStyle = 'border-left:3px solid var(--skc-navy)';
   tbl.innerHTML = `<thead><tr>
     <th>Campaign</th><th>Audience</th>
-    ${months.map(m => `<th colspan="3" style="text-align:center;background:#dbeafe">${m}</th>`).join('')}
+    ${months.map(m => `<th colspan="3" style="text-align:center;background:#dbeafe;${sepStyle}">${m}</th>`).join('')}
   </tr><tr>
     <th></th><th></th>
-    ${months.map(() => '<th>Impr.</th><th>Conv.</th><th>Cost</th>').join('')}
+    ${months.map(() => `<th style="${sepStyle}">Impr.</th><th>Conv.</th><th>Cost</th>`).join('')}
   </tr></thead><tbody>`;
 
   const campaignNames = youthMonthly[0].campaigns.map(c => c.name);
@@ -681,14 +715,14 @@ function renderYouth(mIdx) {
     rows += `<tr><td>${name}</td><td style="color:var(--skc-muted);font-weight:400">Google Ads PMax</td>`;
     youthMonthly.forEach(m => {
       const c = m.campaigns.find(x => x.name === name) || {};
-      rows += `<td>${fmt.n(c.impr)}</td><td style="color:var(--skc-good);font-weight:700">${fmt.n(Math.round(c.conv || 0))}</td><td>${fmt.d(c.spend)}</td>`;
+      rows += `<td style="${sepStyle}">${fmt.n(c.impr)}</td><td style="color:var(--skc-good);font-weight:700">${fmt.n(Math.round(c.conv || 0))}</td><td>${fmt.d(c.spend)}</td>`;
     });
     rows += '</tr>';
   });
   // Totals row
   rows += `<tr style="font-weight:800;background:var(--skc-light)"><td>TOTAL</td><td style="color:var(--skc-muted);font-weight:400">All Campaigns</td>`;
   youthMonthly.forEach(m => {
-    rows += `<td>${fmt.n(m.impr)}</td><td style="color:var(--skc-good);font-weight:700">${fmt.n(Math.round(m.conv))}</td><td>${fmt.d(m.spend)}</td>`;
+    rows += `<td style="${sepStyle}">${fmt.n(m.impr)}</td><td style="color:var(--skc-good);font-weight:700">${fmt.n(Math.round(m.conv))}</td><td>${fmt.d(m.spend)}</td>`;
   });
   rows += '</tr>';
   tbl.innerHTML += rows + '</tbody>';
@@ -803,7 +837,7 @@ function renderArgyle(mIdx) {
   document.getElementById('argyle-cards').innerHTML = gCard + metaCard + agCard;
   document.getElementById('argyle-cards').style.gridTemplateColumns = 'repeat(auto-fill, minmax(280px, 1fr))';
 
-  // MOM Table
+  // MOM Table — Google Ads
   const tbl = document.getElementById('argyle-mom-table');
   tbl.innerHTML = `<thead><tr>
     <th>Month</th><th>Platform</th><th>Impressions</th><th>Clicks</th><th>CTR</th><th>Spend</th><th>Conv.</th><th>Cost/Conv.</th><th>Avg CPC</th>
@@ -823,10 +857,31 @@ function renderArgyle(mIdx) {
     </tr>`;
   }).join('')}
   <tr style="font-weight:800;background:var(--skc-light)">
-    <td>YTD Total</td><td style="color:var(--skc-muted);font-weight:400">Mar–Jul 31, 2026</td>
-    <td>${fmt.n(91106)}</td><td>${fmt.n(1684)}</td><td>—</td><td>${fmt.d(1900.00)}</td>
-    <td style="color:var(--skc-good);font-weight:700">46.84</td><td>${fmt.d(40.56)}</td><td>—</td>
+    <td>YTD Total</td><td style="color:var(--skc-muted);font-weight:400">Mar–Aug 10, 2026</td>
+    <td>${fmt.n(99218)}</td><td>${fmt.n(2020)}</td><td>—</td><td>${fmt.d(2072.00)}</td>
+    <td style="color:var(--skc-good);font-weight:700">49.84</td><td>${fmt.d(41.57)}</td><td>—</td>
   </tr>
+  </tbody>`;
+
+  // MOM Table — Meta
+  const metaTbl = document.getElementById('argyle-mom-meta-table');
+  metaTbl.innerHTML = `<thead><tr>
+    <th>Month</th><th>Campaign</th><th>Landing Page Views</th><th>Reach</th><th>Spend</th><th>Cost / LPV</th><th>Status</th>
+  </tr></thead><tbody>
+  ${argyleMetaMonthly.map((m,i) => {
+    const p = i > 0 ? argyleMetaMonthly[i-1] : null;
+    const isActive = m.status === 'Active';
+    const noData = m.lpv === 0;
+    return `<tr>
+      <td>${m.month}</td>
+      <td style="color:var(--skc-muted);font-weight:400">${m.campaign}</td>
+      <td style="color:var(--skc-good);font-weight:700">${noData ? '—' : fmt.n(m.lpv)}${p && p.lpv > 0 && m.lpv > 0 ? delta(m.lpv, p.lpv) : ''}</td>
+      <td>${noData ? '—' : fmt.n(m.reach)}</td>
+      <td>${noData ? '—' : fmt.d(m.spend)}${p && p.spend > 0 && m.spend > 0 ? delta(m.spend, p.spend) : ''}</td>
+      <td>${m.cpl ? fmt.d(m.cpl) : '—'}</td>
+      <td><span class="status-pill ${isActive ? 'pill-good' : noData ? '' : 'pill-warn'}" style="${noData ? 'color:var(--skc-muted);font-size:10px' : ''}">${m.status}</span></td>
+    </tr>`;
+  }).join('')}
   </tbody>`;
 
   renderInsights('argyle-insights', [
@@ -1091,7 +1146,7 @@ function changeMonth(dir) {
   document.getElementById('monthLabel').textContent = MONTHS[currentMonthIdx];
   document.getElementById('prevMonthBtn').disabled = currentMonthIdx >= MONTHS.length - 1;
   document.getElementById('nextMonthBtn').disabled = currentMonthIdx <= 0;
-  document.getElementById('dataNote').textContent = currentMonthIdx === 3 ? `Data through August 2, 2026` : `Data through ${MONTHS[currentMonthIdx].replace(' 2026','').trim()} 31, 2026`;
+  document.getElementById('dataNote').textContent = currentMonthIdx === 5 ? `Data through August 10, 2026` : `Data through ${MONTHS[currentMonthIdx].replace(' 2026','').trim()} 31, 2026`;
   renderCurrentTab();
 }
 
@@ -1104,6 +1159,7 @@ function renderCurrentTab() {
 // ─────────────────────────────────────────────
 // INIT
 // ─────────────────────────────────────────────
+
 
 
 
