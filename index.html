@@ -247,7 +247,7 @@ footer { margin-top: 60px; border-top: 1px solid var(--skc-border); padding-top:
 <div class="controls-bar">
   <div class="month-nav">
     <button id="prevMonthBtn" onclick="changeMonth(1)">&#8592;</button>
-    <div class="month-label" id="monthLabel">October 2026 (1–25)</div>
+    <div class="month-label" id="monthLabel">November 2026 (1–8)</div>
     <button id="nextMonthBtn" onclick="changeMonth(-1)" disabled>&#8594;</button>
   </div>
   <div class="tab-toggle">
@@ -255,7 +255,7 @@ footer { margin-top: 60px; border-top: 1px solid var(--skc-border); padding-top:
     <button onclick="setTab('argyle', this)">Argyle</button>
     <button onclick="setTab('academy', this)">Academy Residential</button>
   </div>
-  <div class="data-note" id="dataNote">Data through October 25, 2026</div>
+  <div class="data-note" id="dataNote">Data through November 8, 2026</div>
 </div>
 
 <div class="wrap">
@@ -439,8 +439,8 @@ footer { margin-top: 60px; border-top: 1px solid var(--skc-border); padding-top:
 // ─────────────────────────────────────────────
 // DATA
 // ─────────────────────────────────────────────
-const MONTHS = ['March 2026', 'April 2026', 'May 2026', 'June 2026 (1–29)', 'July 2026', 'August 2026', 'September 2026', 'October 2026 (1–25)'];
-let currentMonthIdx = 7; // October = index 7
+const MONTHS = ['March 2026', 'April 2026', 'May 2026', 'June 2026 (1–29)', 'July 2026', 'August 2026', 'September 2026', 'October 2026', 'November 2026 (1–8)'];
+let currentMonthIdx = 8; // November = index 8
 let currentTab = 'youth';
 let currentAdSection = 'youth';
 let adData = { youth: [], argyle: [], academy: [] };
@@ -539,17 +539,29 @@ const youthMonthly = [
       { name: 'Sporting Rec League',            impr: 32194, clicks: 660, ctr: '2.05%', spend: 423.86, conv: 48.49, costConv: 8.74, cpc: 0.64, budget: '$14.00/day', audience: 'Soccer Fans & SKC Supporters', status: 'Needs Attention' },
     ]
   },
-  // October 1–25 (Google Ads custom range Oct 1–25)
+  // October 1–31 (full month actuals, Google Ads custom range Oct 1–31)
   {
-    month: 'October 2026 (1–25)', impr: 39861, clicks: 2543, spend: 1098.35, conv: 391.96, cpc: 0.43,
-    ctr: 6.38, costConv: 2.80,
+    month: 'October 2026', impr: 47034, clicks: 3128, spend: 1325.33, conv: 509.50, cpc: 0.42,
+    ctr: 6.65, costConv: 2.60,
     campaigns: [
-      { name: 'Youth – KC Soccer Camps',        impr: 2331, clicks: 318, ctr: '13.64%', spend: 108.54, conv: 54.46, costConv: 1.99, cpc: 0.34, budget: '$4.33/day', audience: 'Youth Sports Families', status: 'Top Volume' },
-      { name: 'Youth – Sporting Stripes',       impr: 3885, clicks: 661, ctr: '17.01%', spend: 348.74, conv: 183.56, costConv: 1.90, cpc: 0.53, budget: '$14.00/day', audience: 'Youth Sports Families', status: 'Best Value' },
-      { name: 'Youth – Sporting Stars',         impr: 2698, clicks: 476, ctr: '17.64%', spend: 184.33, conv: 114.75, costConv: 1.61, cpc: 0.39, budget: '$7.48/day', audience: 'Youth Sports Families', status: 'Strong' },
+      { name: 'Youth – KC Soccer Camps',        impr: 2704, clicks: 377, ctr: '13.94%', spend: 126.38, conv: 62.52, costConv: 2.02, cpc: 0.34, budget: '$4.33/day', audience: 'Youth Sports Families', status: 'Top Volume' },
+      { name: 'Youth – Sporting Stripes',       impr: 4731, clicks: 813, ctr: '17.18%', spend: 418.41, conv: 239.05, costConv: 1.75, cpc: 0.51, budget: '$14.00/day', audience: 'Youth Sports Families', status: 'Best Value' },
+      { name: 'Youth – Sporting Stars',         impr: 3361, clicks: 560, ctr: '16.66%', spend: 222.25, conv: 147.75, costConv: 1.50, cpc: 0.40, budget: '$7.48/day', audience: 'Youth Sports Families', status: 'Strong' },
       { name: 'Youth – Tourneys',               impr: 0, clicks: 0, ctr: '—', spend: 0.00, conv: 0, costConv: null, cpc: 0, budget: 'Paused', audience: 'Youth Athletes', status: 'Paused' },
-      { name: 'Sporting City – Soccer Team',    impr: 3330, clicks: 400, ctr: '12.01%', spend: 106.28, conv: 12.24, costConv: 8.68, cpc: 0.27, budget: '$4.33/day', audience: 'Soccer Fans & SKC Supporters', status: 'High CTR' },
-      { name: 'Sporting Rec League',            impr: 27617, clicks: 688, ctr: '2.49%', spend: 350.46, conv: 26.95, costConv: 13.00, cpc: 0.51, budget: '$14.00/day', audience: 'Soccer Fans & SKC Supporters', status: 'Needs Attention' },
+      { name: 'Sporting City – Soccer Team',    impr: 4589, clicks: 516, ctr: '11.24%', spend: 132.00, conv: 24.52, costConv: 5.38, cpc: 0.26, budget: '$4.33/day', audience: 'Soccer Fans & SKC Supporters', status: 'High CTR' },
+      { name: 'Sporting Rec League',            impr: 31649, clicks: 862, ctr: '2.72%', spend: 426.29, conv: 35.66, costConv: 11.95, cpc: 0.49, budget: '$14.00/day', audience: 'Soccer Fans & SKC Supporters', status: 'Needs Attention' },
+    ]
+  },
+  {
+    month: 'November 2026 (1–8)', impr: 9397, clicks: 829, spend: 361.26, conv: 125.56, cpc: 0.44,
+    ctr: 8.82, costConv: 2.88,
+    campaigns: [
+      { name: 'Youth – KC Soccer Camps', impr: 481, clicks: 123, ctr: '25.57%', spend: 35.64, conv: 13.47, costConv: 2.65, cpc: 0.29, budget: '$4.33/day', audience: 'Youth Sports Families', status: 'Top Volume' },
+      { name: 'Youth – Sporting Stripes', impr: 1206, clicks: 241, ctr: '19.98%', spend: 115.54, conv: 66.69, costConv: 1.73, cpc: 0.48, budget: '$14.00/day', audience: 'Youth Sports Families', status: 'Best Value' },
+      { name: 'Youth – Sporting Stars', impr: 761, clicks: 157, ctr: '20.63%', spend: 61.71, conv: 39.83, costConv: 1.55, cpc: 0.39, budget: '$7.48/day', audience: 'Youth Sports Families', status: 'Strong' },
+      { name: 'Youth – Tourneys', impr: 0, clicks: 0, ctr: '—', spend: 0.00, conv: 0, costConv: null, cpc: 0, budget: 'Paused', audience: 'Youth Athletes', status: 'Paused' },
+      { name: 'Sporting City – Soccer Team', impr: 1986, clicks: 147, ctr: '7.40%', spend: 36.37, conv: 0, costConv: null, cpc: 0.25, budget: '$4.33/day', audience: 'Soccer Fans & SKC Supporters', status: 'Needs Attention' },
+      { name: 'Sporting Rec League', impr: 4963, clicks: 161, ctr: '3.24%', spend: 112.00, conv: 5.57, costConv: 20.12, cpc: 0.7, budget: '$14.00/day', audience: 'Soccer Fans & SKC Supporters', status: 'Needs Attention' },
     ]
   }
 ];
@@ -640,17 +652,30 @@ const argyleMonthly = [
     status: 'Improving', note: 'Full-month September actuals (Google Ads custom range Sep 1–30). Holidays - Corporate delivered 99% of impressions and 26.07 of 28.07 conversions at $21.69 CPA; Evergreen logged only 286 impressions before sitting fully paused. Overall CPA of $20.41 is the lowest of any month to date. Evergreen clicks reflect reported interactions. Est. 4773 Meta campaign completed Sep 30 with 2,789 landing page views at $0.23/LPV — full-month actual.'
   },
   {
-    month: 'October 2026 (1–25)', impr: 27138, clicks: 235, spend: 459.07, conv: 23.64, cpc: 1.95,
-    ctr: 0.87, costConv: 19.42,
+    month: 'October 2026', impr: 32127, clicks: 266, spend: 576.22, conv: 28.06, cpc: 2.17,
+    ctr: 0.83, costConv: 20.54,
     assetGroups: [
       { name: 'Evergreen',            impr: 0,     clicks: 0,   ctr: '—',     spend: 0,      conv: 0,    costConv: null, status: 'Paused' },
-      { name: 'Holidays - Corporate', impr: 27138, clicks: 235, ctr: '0.87%', spend: 459.07, conv: 23.64, costConv: 19.42, status: 'Active' },
+      { name: 'Holidays - Corporate', impr: 32127, clicks: 266, ctr: '0.83%', spend: 576.22, conv: 28.06, costConv: 20.54, status: 'Active' },
       { name: 'WorldCup Event Space', impr: 0,     clicks: 0,   ctr: '—',     spend: 0,      conv: 0,    costConv: null, status: 'Paused' },
       { name: 'Corporate Events',     impr: 0,     clicks: 0,   ctr: '—',     spend: 0,      conv: 0,    costConv: null, status: 'Paused' },
       { name: 'Weddings',             impr: 0,     clicks: 0,   ctr: '—',     spend: 0,      conv: 0,    costConv: null, status: 'Paused' },
       { name: 'NPO (Gala)',           impr: 0,     clicks: 0,   ctr: '—',     spend: 0,      conv: 0,    costConv: null, status: 'Paused' },
     ],
-    status: 'Improving', note: 'Oct 1–25 — Holidays - Corporate is the sole active asset group (all others, including Evergreen, paused). 23.64 conversions at a $19.42 CPA — now below September\'s $20.41 and down from $31.88 at Oct 18 as late conversions posted. Est. 4793 Meta campaign: 2,268 landing page views at $0.21/LPV through Oct 25 (Est. 4838 Nov campaign, which began delivering in October, is excluded from October reporting).'
+    status: 'Improving', note: 'Full-month October actuals (Google Ads custom range Oct 1–31). Holidays - Corporate was the sole active asset group (all others, including Evergreen, paused), delivering 28.06 conversions at a $20.54 CPA — essentially level with September\'s $20.41 record low. Est. 4793 Meta campaign completed Oct 31 with 2,561 landing page views at $0.22/LPV — full-month actual. Est. 4838 (Nov) began delivering in October but is excluded from October reporting.'
+  },
+  {
+    month: 'November 2026 (1–8)', impr: 9516, clicks: 49, spend: 164.77, conv: 4.52, cpc: 3.36,
+    ctr: 0.51, costConv: 36.45,
+    assetGroups: [
+      { name: 'Evergreen',            impr: 0,     clicks: 0,   ctr: '—',     spend: 0,      conv: 0,    costConv: null, status: 'Paused' },
+      { name: 'Holidays - Corporate', impr: 9516,  clicks: 49,  ctr: '0.51%', spend: 164.77, conv: 4.52, costConv: 36.45, status: 'Active' },
+      { name: 'WorldCup Event Space', impr: 0,     clicks: 0,   ctr: '—',     spend: 0,      conv: 0,    costConv: null, status: 'Paused' },
+      { name: 'Corporate Events',     impr: 0,     clicks: 0,   ctr: '—',     spend: 0,      conv: 0,    costConv: null, status: 'Paused' },
+      { name: 'Weddings',             impr: 0,     clicks: 0,   ctr: '—',     spend: 0,      conv: 0,    costConv: null, status: 'Paused' },
+      { name: 'NPO (Gala)',           impr: 0,     clicks: 0,   ctr: '—',     spend: 0,      conv: 0,    costConv: null, status: 'Paused' },
+    ],
+    status: 'Mixed', note: 'Nov 1–8 — Holidays - Corporate remains the sole active asset group (all others paused) and is limited by its $19/day budget. Early-month CPA of $36.45 on 4.52 conversions is well above October\'s $20.54; recent conversions may still be updating. Est. 4838 Meta campaign (Nov): 519 landing page views at $0.45/LPV through Nov 8 — about double October\'s $0.22/LPV.'
   }
 ];
 
@@ -671,7 +696,8 @@ const argyleMetaMonthly = [
   { month: 'July 2026',           campaign: 'Est. 4713', lpv: 1207, reach: 32889,  spend: 289.68, cpl: 0.24,  status: 'Completed Jul 31' },
   { month: 'August 2026', campaign: 'Est. 4742', lpv: 2392, reach: 61842,  spend: 620.83, cpl: 0.26,  status: 'Completed Aug 31' },
   { month: 'September 2026', campaign: 'Est. 4773', lpv: 2789, reach: 44604, spend: 637.36, cpl: 0.23, status: 'Completed Sep 30' },
-  { month: 'October 2026 (1–25)', campaign: 'Est. 4793', lpv: 2268, reach: 20921, spend: 469.62, cpl: 0.21, status: 'Active' },
+  { month: 'October 2026', campaign: 'Est. 4793', lpv: 2561, reach: 28703, spend: 574.67, cpl: 0.22, status: 'Completed Oct 31' },
+  { month: 'November 2026 (1–8)', campaign: 'Est. 4838', lpv: 519, reach: 16732, spend: 232.62, cpl: 0.45, status: 'Active' },
 ];
 
 let currentArgyleMomTab = 'google';
@@ -833,17 +859,22 @@ function renderArgyle(mIdx) {
       <div><div class="plat-name">Meta / Facebook</div><div class="plat-sub">Argyle Events — 5 Campaigns</div></div>
     </div>
     <div class="card-body">
-      <div class="metric-row"><span class="m-label">Impressions</span><span class="m-value">30,938<span class="m-sub">Reach: 20,921 · Oct 1–25</span></span></div>
-      <div class="metric-row"><span class="m-label">Landing Page Views</span><span class="m-value" style="color:var(--skc-good)">2,268<span class="m-sub">Primary conversion event</span></span></div>
-      <div class="metric-row"><span class="m-label">Cost per LPV</span><span class="m-value">$0.21<span class="m-sub">Est. 4793 — Oct 1–25</span></span></div>
-      <div class="metric-row"><span class="m-label">Total Spend</span><span class="m-value" style="color:var(--skc-gold)">$469.62</span></div>
+      <div class="metric-row"><span class="m-label">Impressions</span><span class="m-value">25,919<span class="m-sub">Reach: 16,732 · Nov 1–8</span></span></div>
+      <div class="metric-row"><span class="m-label">Landing Page Views</span><span class="m-value" style="color:var(--skc-good)">519<span class="m-sub">Primary conversion event</span></span></div>
+      <div class="metric-row"><span class="m-label">Cost per LPV</span><span class="m-value">$0.45<span class="m-sub">Est. 4838 — Nov 1–8</span></span></div>
+      <div class="metric-row"><span class="m-label">Total Spend</span><span class="m-value" style="color:var(--skc-gold)">$232.62</span></div>
       <div style="margin-top:12px;border-top:1px solid var(--skc-border);padding-top:10px">
         <div style="font-size:10px;font-weight:700;color:var(--skc-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Campaign Breakdown</div>
         <div style="font-size:11px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center">
-          <span style="font-weight:600">Est. 4793 – Argyle Events (Oct)</span>
+          <span style="font-weight:600">Est. 4838 – Argyle Events (Nov)</span>
           <span class="status-pill pill-good">Active</span>
         </div>
-        <div style="font-size:11px;color:var(--skc-muted);margin-bottom:10px">2,268 LPVs · $0.21/LPV · $469.62 spend · 30,938 impr · 20,921 reach · Oct 1–25</div>
+        <div style="font-size:11px;color:var(--skc-muted);margin-bottom:10px">519 LPVs · $0.45/LPV · $232.62 spend · 25,919 impr · 16,732 reach · Nov 1–8</div>
+        <div style="font-size:11px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center">
+          <span style="font-weight:600">Est. 4793 – Argyle Events (Oct)</span>
+          <span class="status-pill pill-warn">Completed Oct 31</span>
+        </div>
+        <div style="font-size:11px;color:var(--skc-muted);margin-bottom:10px">2,561 LPVs · $0.22/LPV · $574.67 spend · 42,883 impr · 28,703 reach · Completed Oct 31</div>
         <div style="font-size:11px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center">
           <span style="font-weight:600">Est. 4773 – Argyle Events (Sept)</span>
           <span class="status-pill pill-warn">Completed Sep 30</span>
@@ -922,9 +953,9 @@ function renderArgyle(mIdx) {
     </tr>`;
   }).join('')}
   <tr style="font-weight:800;background:var(--skc-light)">
-    <td>YTD Total</td><td style="color:var(--skc-muted);font-weight:400">Mar–Oct 25, 2026</td>
-    <td>${fmt.n(184414)}</td><td>${fmt.n(3393)}</td><td>—</td><td>${fmt.d(3514.20)}</td>
-    <td style="color:var(--skc-good);font-weight:700">123.69</td><td>${fmt.d(28.41)}</td><td>—</td>
+    <td>YTD Total</td><td style="color:var(--skc-muted);font-weight:400">Mar–Nov 8, 2026</td>
+    <td>${fmt.n(198919)}</td><td>${fmt.n(3473)}</td><td>—</td><td>${fmt.d(3796.12)}</td>
+    <td style="color:var(--skc-good);font-weight:700">132.63</td><td>${fmt.d(28.62)}</td><td>—</td>
   </tr>
   </tbody>`;
 
@@ -950,7 +981,7 @@ function renderArgyle(mIdx) {
   </tbody>`;
 
   renderInsights('argyle-insights', [
-    `<strong>YTD (Mar–Oct 25):</strong> ${fmt.n(184414)} impressions · ${fmt.n(3393)} clicks · ${fmt.d(3514.20)} spend · <span class="hi-good">123.69 conversions</span> at ${fmt.d(28.41)} avg cost/conv.`,
+    `<strong>YTD (Mar–Nov 8):</strong> ${fmt.n(198919)} impressions · ${fmt.n(3473)} clicks · ${fmt.d(3796.12)} spend · <span class="hi-good">132.63 conversions</span> at ${fmt.d(28.62)} avg cost/conv.`,
     mIdx === 2 ? `<strong>May concern:</strong> <span class="hi-warn">WorldCup Event Space impressions jumped 4x (5,732 → 23,338) but CTR collapsed to 0.69%</span> — algorithm is reaching lower-intent audience. Hold budget at $13/day until resolved.` : '',
     mIdx === 1 ? `<strong>April breakout:</strong> <span class="hi-good">CPA improved 71% MoM ($108.79 → $31.21)</span> and conversions grew 5.4x.` : '',
     `<strong>Corporate Events</strong> is the most efficient asset group — <span class="hi-good">$15.69/conv in May</span>. Recommend expanding search themes here.`,
@@ -1215,7 +1246,7 @@ function changeMonth(dir) {
   const partial = mLbl.match(/^(\w+) \d+ \(1–(\d+)\)$/); // e.g. "September 2026 (1–7)"
   document.getElementById('dataNote').textContent = partial
     ? `Data through ${partial[1]} ${partial[2]}, 2026`
-    : `Data through ${mLbl.replace(' 2026','').trim()} ${({March:31,April:30,May:31,June:30,July:31,August:31,September:30,October:31})[mLbl.replace(' 2026','').trim()]}, 2026`;
+    : `Data through ${mLbl.replace(' 2026','').trim()} ${({March:31,April:30,May:31,June:30,July:31,August:31,September:30,October:31,November:30})[mLbl.replace(' 2026','').trim()]}, 2026`;
   renderCurrentTab();
 }
 
