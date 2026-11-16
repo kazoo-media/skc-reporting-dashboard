@@ -28,6 +28,8 @@
   --col-meta:      #1877F2;
   --col-display:   #F05A24;
   --col-olv:       #7C3AED;
+  --col-spotify:   #1DB954;
+  --col-tiktok:    #010101;
 }
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; background: var(--skc-bg); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; color: var(--skc-text); line-height: 1.5; font-size: 14px; }
@@ -86,6 +88,8 @@ html, body { margin: 0; padding: 0; background: var(--skc-bg); font-family: -app
 .card-header.meta    { background: var(--col-meta); }
 .card-header.display { background: var(--col-display); }
 .card-header.olv     { background: var(--col-olv); }
+.card-header.spotify { background: var(--col-spotify); }
+.card-header.tiktok  { background: var(--col-tiktok); }
 .card-header.navy    { background: var(--skc-navy); }
 .plat-icon { width: 28px; height: 28px; background: rgba(255,255,255,0.18); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
 .plat-name { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
@@ -232,7 +236,7 @@ footer { margin-top: 60px; border-top: 1px solid var(--skc-border); padding-top:
     </div>
   </div>
   <div class="header-center" style="padding:14px 0">
-    <div class="header-center-title">Youth · Argyle · Academy Residential</div>
+    <div class="header-center-title">Youth · Argyle · Academy Residential · Est. 4827</div>
     <div class="header-center-sub">2026 · Prepared by Kazoo Media</div>
   </div>
   <div class="header-right">
@@ -247,15 +251,16 @@ footer { margin-top: 60px; border-top: 1px solid var(--skc-border); padding-top:
 <div class="controls-bar">
   <div class="month-nav">
     <button id="prevMonthBtn" onclick="changeMonth(1)">&#8592;</button>
-    <div class="month-label" id="monthLabel">November 2026 (1–8)</div>
+    <div class="month-label" id="monthLabel">November 2026 (1–15)</div>
     <button id="nextMonthBtn" onclick="changeMonth(-1)" disabled>&#8594;</button>
   </div>
   <div class="tab-toggle">
     <button class="active" onclick="setTab('youth', this)">Youth</button>
     <button onclick="setTab('argyle', this)">Argyle</button>
     <button onclick="setTab('academy', this)">Academy Residential</button>
+    <button onclick="setTab('psu4827', this)">Est. 4827 PSU vs NWMS</button>
   </div>
-  <div class="data-note" id="dataNote">Data through November 8, 2026</div>
+  <div class="data-note" id="dataNote">Data through November 15, 2026</div>
 </div>
 
 <div class="wrap">
@@ -386,10 +391,41 @@ footer { margin-top: 60px; border-top: 1px solid var(--skc-border); padding-top:
   </div>
 </div>
 
+
+<!-- ===================== EST. 4827 PSU vs NWMS TAB ===================== -->
+<div id="tab-psu4827" style="display:none">
+  <div class="section-label">
+    <div class="accent-bar"></div>
+    <h2>Est. 4827 — PSU vs NWMS 2026</h2>
+    <span class="badge">Meta · Spotify · Google Display · TikTok · Flight through Nov 14, 2026</span>
+  </div>
+
+  <div class="insights-card" id="psu4827-insights"></div>
+
+  <div class="kpi-strip" id="psu4827-kpis"></div>
+
+  <div class="note-banner pending">
+    <strong>📅 Flight summary:</strong> Cumulative totals for the full Est. 4827 flight (October – Nov 14, 2026), pulled Nov 16, 2026. Clicks use each platform's own definition (Meta = link clicks). Meta reach is shown per campaign and is not deduplicated. Spotify spend is CPC × clicks, matching its $1,275 lifetime budget.
+  </div>
+
+  <div class="platform-grid" id="psu4827-cards"></div>
+
+  <div class="mom-section">
+    <div class="mom-header"><h3>📊 Channel Performance Comparison — Full Flight</h3></div>
+    <div class="mom-body"><table class="mom-table" id="psu4827-table"></table></div>
+  </div>
+
+  <div class="chart-card">
+    <h3>Spend by Channel</h3>
+    <p class="chart-sub">Budget distribution across Meta, Spotify, Google Display &amp; TikTok — full flight</p>
+    <div class="chart-box"><canvas id="chart-psu4827"></canvas></div>
+  </div>
+</div>
+
 </div><!-- /wrap -->
 
 <footer>
-  <strong>Kazoo Media</strong> &nbsp;·&nbsp; Sporting KC Campaign Performance Dashboard &nbsp;·&nbsp; Data Sources: Google Ads, Meta Ads Manager, Equativ (Display &amp; OLV)
+  <strong>Kazoo Media</strong> &nbsp;·&nbsp; Sporting KC Campaign Performance Dashboard &nbsp;·&nbsp; Data Sources: Google Ads, Meta Ads Manager, Equativ (Display &amp; OLV), Spotify Ads Manager, TikTok Ads Manager
 </footer>
 
 <!-- ADD CREATIVE MODAL -->
@@ -439,7 +475,7 @@ footer { margin-top: 60px; border-top: 1px solid var(--skc-border); padding-top:
 // ─────────────────────────────────────────────
 // DATA
 // ─────────────────────────────────────────────
-const MONTHS = ['March 2026', 'April 2026', 'May 2026', 'June 2026 (1–29)', 'July 2026', 'August 2026', 'September 2026', 'October 2026', 'November 2026 (1–8)'];
+const MONTHS = ['March 2026', 'April 2026', 'May 2026', 'June 2026 (1–29)', 'July 2026', 'August 2026', 'September 2026', 'October 2026', 'November 2026 (1–15)'];
 let currentMonthIdx = 8; // November = index 8
 let currentTab = 'youth';
 let currentAdSection = 'youth';
@@ -553,15 +589,15 @@ const youthMonthly = [
     ]
   },
   {
-    month: 'November 2026 (1–8)', impr: 9397, clicks: 829, spend: 361.26, conv: 125.56, cpc: 0.44,
-    ctr: 8.82, costConv: 2.88,
+    month: 'November 2026 (1–15)', impr: 17642, clicks: 1340, spend: 674.26, conv: 231.69, cpc: 0.50,
+    ctr: 7.60, costConv: 2.91,
     campaigns: [
-      { name: 'Youth – KC Soccer Camps', impr: 481, clicks: 123, ctr: '25.57%', spend: 35.64, conv: 13.47, costConv: 2.65, cpc: 0.29, budget: '$4.33/day', audience: 'Youth Sports Families', status: 'Top Volume' },
-      { name: 'Youth – Sporting Stripes', impr: 1206, clicks: 241, ctr: '19.98%', spend: 115.54, conv: 66.69, costConv: 1.73, cpc: 0.48, budget: '$14.00/day', audience: 'Youth Sports Families', status: 'Best Value' },
-      { name: 'Youth – Sporting Stars', impr: 761, clicks: 157, ctr: '20.63%', spend: 61.71, conv: 39.83, costConv: 1.55, cpc: 0.39, budget: '$7.48/day', audience: 'Youth Sports Families', status: 'Strong' },
+      { name: 'Youth – KC Soccer Camps', impr: 721, clicks: 169, ctr: '23.44%', spend: 52.92, conv: 23.03, costConv: 2.30, cpc: 0.31, budget: '$4.33/day', audience: 'Youth Sports Families', status: 'Top Volume' },
+      { name: 'Youth – Sporting Stripes', impr: 2010, clicks: 393, ctr: '19.55%', spend: 215.26, conv: 117.82, costConv: 1.83, cpc: 0.55, budget: '$14.00/day', audience: 'Youth Sports Families', status: 'Best Value' },
+      { name: 'Youth – Sporting Stars', impr: 1318, clicks: 259, ctr: '19.65%', spend: 114.34, conv: 80.27, costConv: 1.42, cpc: 0.44, budget: '$7.48/day', audience: 'Youth Sports Families', status: 'Strong' },
       { name: 'Youth – Tourneys', impr: 0, clicks: 0, ctr: '—', spend: 0.00, conv: 0, costConv: null, cpc: 0, budget: 'Paused', audience: 'Youth Athletes', status: 'Paused' },
-      { name: 'Sporting City – Soccer Team', impr: 1986, clicks: 147, ctr: '7.40%', spend: 36.37, conv: 0, costConv: null, cpc: 0.25, budget: '$4.33/day', audience: 'Soccer Fans & SKC Supporters', status: 'Needs Attention' },
-      { name: 'Sporting Rec League', impr: 4963, clicks: 161, ctr: '3.24%', spend: 112.00, conv: 5.57, costConv: 20.12, cpc: 0.7, budget: '$14.00/day', audience: 'Soccer Fans & SKC Supporters', status: 'Needs Attention' },
+      { name: 'Sporting City – Soccer Team', impr: 3730, clicks: 272, ctr: '7.29%', spend: 75.36, conv: 1.00, costConv: 75.36, cpc: 0.28, budget: '$6.33/day', audience: 'Soccer Fans & SKC Supporters', status: 'Needs Attention' },
+      { name: 'Sporting Rec League', impr: 9863, clicks: 247, ctr: '2.50%', spend: 216.38, conv: 9.57, costConv: 22.61, cpc: 0.88, budget: '$14.00/day', audience: 'Soccer Fans & SKC Supporters', status: 'Needs Attention' },
     ]
   }
 ];
@@ -665,17 +701,17 @@ const argyleMonthly = [
     status: 'Improving', note: 'Full-month October actuals (Google Ads custom range Oct 1–31). Holidays - Corporate was the sole active asset group (all others, including Evergreen, paused), delivering 28.06 conversions at a $20.54 CPA — essentially level with September\'s $20.41 record low. Est. 4793 Meta campaign completed Oct 31 with 2,561 landing page views at $0.22/LPV — full-month actual. Est. 4838 (Nov) began delivering in October but is excluded from October reporting.'
   },
   {
-    month: 'November 2026 (1–8)', impr: 9516, clicks: 49, spend: 164.77, conv: 4.52, cpc: 3.36,
-    ctr: 0.51, costConv: 36.45,
+    month: 'November 2026 (1–15)', impr: 18838, clicks: 81, spend: 301.11, conv: 13.89, cpc: 3.72,
+    ctr: 0.43, costConv: 21.68,
     assetGroups: [
       { name: 'Evergreen',            impr: 0,     clicks: 0,   ctr: '—',     spend: 0,      conv: 0,    costConv: null, status: 'Paused' },
-      { name: 'Holidays - Corporate', impr: 9516,  clicks: 49,  ctr: '0.51%', spend: 164.77, conv: 4.52, costConv: 36.45, status: 'Active' },
+      { name: 'Holidays - Corporate', impr: 18838, clicks: 81,  ctr: '0.43%', spend: 301.11, conv: 13.89, costConv: 21.68, status: 'Active' },
       { name: 'WorldCup Event Space', impr: 0,     clicks: 0,   ctr: '—',     spend: 0,      conv: 0,    costConv: null, status: 'Paused' },
       { name: 'Corporate Events',     impr: 0,     clicks: 0,   ctr: '—',     spend: 0,      conv: 0,    costConv: null, status: 'Paused' },
       { name: 'Weddings',             impr: 0,     clicks: 0,   ctr: '—',     spend: 0,      conv: 0,    costConv: null, status: 'Paused' },
       { name: 'NPO (Gala)',           impr: 0,     clicks: 0,   ctr: '—',     spend: 0,      conv: 0,    costConv: null, status: 'Paused' },
     ],
-    status: 'Mixed', note: 'Nov 1–8 — Holidays - Corporate remains the sole active asset group (all others paused) and is limited by its $19/day budget. Early-month CPA of $36.45 on 4.52 conversions is well above October\'s $20.54; recent conversions may still be updating. Est. 4838 Meta campaign (Nov): 519 landing page views at $0.45/LPV through Nov 8 — about double October\'s $0.22/LPV.'
+    status: 'Improving', note: 'Nov 1–15 — Holidays - Corporate remains the sole active asset group (all others paused) and is limited by its $19/day budget. CPA improved to $21.68 on 13.89 conversions (from $36.45 at Nov 8), close to October\'s $20.54. Est. 4838 Meta campaign (Nov): 954 landing page views at $0.45/LPV through Nov 15; its $487.73 lifetime budget is now spent and its ad sets are inactive.'
   }
 ];
 
@@ -697,7 +733,7 @@ const argyleMetaMonthly = [
   { month: 'August 2026', campaign: 'Est. 4742', lpv: 2392, reach: 61842,  spend: 620.83, cpl: 0.26,  status: 'Completed Aug 31' },
   { month: 'September 2026', campaign: 'Est. 4773', lpv: 2789, reach: 44604, spend: 637.36, cpl: 0.23, status: 'Completed Sep 30' },
   { month: 'October 2026', campaign: 'Est. 4793', lpv: 2561, reach: 28703, spend: 574.67, cpl: 0.22, status: 'Completed Oct 31' },
-  { month: 'November 2026 (1–8)', campaign: 'Est. 4838', lpv: 519, reach: 16732, spend: 232.62, cpl: 0.45, status: 'Active' },
+  { month: 'November 2026 (1–15)', campaign: 'Est. 4838', lpv: 954, reach: 35840, spend: 424.73, cpl: 0.45, status: 'Budget spent' },
 ];
 
 let currentArgyleMomTab = 'google';
@@ -859,17 +895,17 @@ function renderArgyle(mIdx) {
       <div><div class="plat-name">Meta / Facebook</div><div class="plat-sub">Argyle Events — 5 Campaigns</div></div>
     </div>
     <div class="card-body">
-      <div class="metric-row"><span class="m-label">Impressions</span><span class="m-value">25,919<span class="m-sub">Reach: 16,732 · Nov 1–8</span></span></div>
-      <div class="metric-row"><span class="m-label">Landing Page Views</span><span class="m-value" style="color:var(--skc-good)">519<span class="m-sub">Primary conversion event</span></span></div>
-      <div class="metric-row"><span class="m-label">Cost per LPV</span><span class="m-value">$0.45<span class="m-sub">Est. 4838 — Nov 1–8</span></span></div>
-      <div class="metric-row"><span class="m-label">Total Spend</span><span class="m-value" style="color:var(--skc-gold)">$232.62</span></div>
+      <div class="metric-row"><span class="m-label">Impressions</span><span class="m-value">53,555<span class="m-sub">Reach: 35,840 · Nov 1–15</span></span></div>
+      <div class="metric-row"><span class="m-label">Landing Page Views</span><span class="m-value" style="color:var(--skc-good)">954<span class="m-sub">Primary conversion event</span></span></div>
+      <div class="metric-row"><span class="m-label">Cost per LPV</span><span class="m-value">$0.45<span class="m-sub">Est. 4838 — Nov 1–15</span></span></div>
+      <div class="metric-row"><span class="m-label">Total Spend</span><span class="m-value" style="color:var(--skc-gold)">$424.73</span></div>
       <div style="margin-top:12px;border-top:1px solid var(--skc-border);padding-top:10px">
         <div style="font-size:10px;font-weight:700;color:var(--skc-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Campaign Breakdown</div>
         <div style="font-size:11px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center">
           <span style="font-weight:600">Est. 4838 – Argyle Events (Nov)</span>
-          <span class="status-pill pill-good">Active</span>
+          <span class="status-pill pill-warn">Budget spent</span>
         </div>
-        <div style="font-size:11px;color:var(--skc-muted);margin-bottom:10px">519 LPVs · $0.45/LPV · $232.62 spend · 25,919 impr · 16,732 reach · Nov 1–8</div>
+        <div style="font-size:11px;color:var(--skc-muted);margin-bottom:10px">954 LPVs · $0.45/LPV · $424.73 spend · 53,555 impr · 35,840 reach · Nov 1–15</div>
         <div style="font-size:11px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center">
           <span style="font-weight:600">Est. 4793 – Argyle Events (Oct)</span>
           <span class="status-pill pill-warn">Completed Oct 31</span>
@@ -953,9 +989,9 @@ function renderArgyle(mIdx) {
     </tr>`;
   }).join('')}
   <tr style="font-weight:800;background:var(--skc-light)">
-    <td>YTD Total</td><td style="color:var(--skc-muted);font-weight:400">Mar–Nov 8, 2026</td>
-    <td>${fmt.n(198919)}</td><td>${fmt.n(3473)}</td><td>—</td><td>${fmt.d(3796.12)}</td>
-    <td style="color:var(--skc-good);font-weight:700">132.63</td><td>${fmt.d(28.62)}</td><td>—</td>
+    <td>YTD Total</td><td style="color:var(--skc-muted);font-weight:400">Mar–Nov 15, 2026</td>
+    <td>${fmt.n(208241)}</td><td>${fmt.n(3505)}</td><td>—</td><td>${fmt.d(3932.46)}</td>
+    <td style="color:var(--skc-good);font-weight:700">142.00</td><td>${fmt.d(27.69)}</td><td>—</td>
   </tr>
   </tbody>`;
 
@@ -981,7 +1017,7 @@ function renderArgyle(mIdx) {
   </tbody>`;
 
   renderInsights('argyle-insights', [
-    `<strong>YTD (Mar–Nov 8):</strong> ${fmt.n(198919)} impressions · ${fmt.n(3473)} clicks · ${fmt.d(3796.12)} spend · <span class="hi-good">132.63 conversions</span> at ${fmt.d(28.62)} avg cost/conv.`,
+    `<strong>YTD (Mar–Nov 15):</strong> ${fmt.n(208241)} impressions · ${fmt.n(3505)} clicks · ${fmt.d(3932.46)} spend · <span class="hi-good">142.00 conversions</span> at ${fmt.d(27.69)} avg cost/conv.`,
     mIdx === 2 ? `<strong>May concern:</strong> <span class="hi-warn">WorldCup Event Space impressions jumped 4x (5,732 → 23,338) but CTR collapsed to 0.69%</span> — algorithm is reaching lower-intent audience. Hold budget at $13/day until resolved.` : '',
     mIdx === 1 ? `<strong>April breakout:</strong> <span class="hi-good">CPA improved 71% MoM ($108.79 → $31.21)</span> and conversions grew 5.4x.` : '',
     `<strong>Corporate Events</strong> is the most efficient asset group — <span class="hi-good">$15.69/conv in May</span>. Recommend expanding search themes here.`,
@@ -1142,6 +1178,126 @@ function renderArgyleChart() {
   });
 }
 
+
+// ── EST. 4827 PSU vs NWMS (cumulative full flight, pulled Nov 16, 2026) ──
+const psu4827 = {
+  meta: {
+    impr: 101031, linkClicks: 4026, spend: 849.83, lpv: 3120, eventResponses: 188,
+    campaigns: [
+      { name: 'Est. 4827 – PSU vs NWMS 2026', impr: 38906, reach: 18801, freq: 2.07, clicks: 2941, spend: 275.69, result: '2,536 LPVs', cpr: '$0.11/LPV' },
+      { name: 'Est. 4827 PSU vs NWMS Traffic Ad', impr: 41826, reach: 2621, freq: 15.96, clicks: 818, spend: 424.14, result: '584 LPVs', cpr: '$0.73/LPV' },
+      { name: 'Est. 4827 PSU vs NWMS Event Ad', impr: 20299, reach: 1850, freq: 10.97, clicks: 267, spend: 150.00, result: '188 event responses', cpr: '$0.80/response' },
+    ]
+  },
+  spotify: { impr: 93284, reach: 9234, freq: 10.10, clicks: 27, spend: 1274.94 },
+  display: { impr: 727201, clicks: 18005, spend: 1352.87 },
+  tiktok:  { impr: 260362, clicks: 4000, spend: 850.00 },
+};
+psu4827.total = ['meta','spotify','display','tiktok'].reduce((a,k) => {
+  const c = psu4827[k];
+  a.impr += c.impr; a.clicks += (k === 'meta' ? c.linkClicks : c.clicks); a.spend += c.spend; return a;
+}, { impr: 0, clicks: 0, spend: 0 });
+
+function renderPsu4827() {
+  const d = psu4827, t = d.total;
+  const ctr = (cl, im) => (cl / im * 100).toFixed(2) + '%';
+  const cpm = (sp, im) => fmt.d(sp / im * 1000);
+  const metaReachMax = Math.max(...d.meta.campaigns.map(c => c.reach));
+
+  document.getElementById('psu4827-kpis').innerHTML = [
+    { label: 'Total Impressions', val: fmt.n(t.impr), cls: '' },
+    { label: 'Total Clicks', val: fmt.n(t.clicks), cls: 'blue' },
+    { label: 'Total Spend', val: fmt.d(t.spend), cls: 'gold' },
+    { label: 'Blended CPM', val: cpm(t.spend, t.impr), cls: '' },
+    { label: 'Blended CTR', val: ctr(t.clicks, t.impr), cls: '' },
+    { label: 'Meta Landing Page Views', val: fmt.n(d.meta.lpv), cls: 'green' },
+    { label: 'Meta Event Responses', val: fmt.n(d.meta.eventResponses), cls: 'green' },
+    { label: 'Channels', val: '4', cls: '' },
+  ].map(k => `<div class="kpi-tile"><div class="kpi-val ${k.cls}">${k.val}</div><div class="kpi-label">${k.label}</div></div>`).join('');
+
+  renderInsights('psu4827-insights', [
+    `<strong>Flight total:</strong> ${fmt.n(t.impr)} impressions and ${fmt.n(t.clicks)} clicks on ${fmt.d(t.spend)} across four channels — <span class="hi-good">${cpm(t.spend, t.impr)} blended CPM</span>.`,
+    `<strong>Google Display</strong> was the reach engine: ${fmt.n(d.display.impr)} impressions (${Math.round(d.display.impr / t.impr * 100)}% of total) and ${fmt.n(d.display.clicks)} clicks at a ${cpm(d.display.spend, d.display.impr)} CPM.`,
+    `<strong>Meta</strong> drove <span class="hi-good">${fmt.n(d.meta.lpv)} landing page views</span> plus ${d.meta.eventResponses} event responses; the main PSU vs NWMS campaign was the most efficient at $0.11 per LPV.`,
+    `<strong>TikTok</strong> delivered ${fmt.n(d.tiktok.impr)} impressions and ${fmt.n(d.tiktok.clicks)} clicks at a ${fmt.d(d.tiktok.spend / d.tiktok.clicks)} CPC (${ctr(d.tiktok.clicks, d.tiktok.impr)} CTR).`,
+    `<strong>Spotify</strong> reached ${fmt.n(d.spotify.reach)} listeners ${d.spotify.freq.toFixed(1)}x each (${fmt.n(d.spotify.impr)} audio impressions) at a ${cpm(d.spotify.spend, d.spotify.impr)} CPM — <span class="hi-warn">highest CPM</span>, with minimal clicks as expected for audio.`,
+  ]);
+
+  const cards = [
+    { cls: 'meta', icon: 'f', name: 'Meta / Facebook', sub: '3 campaigns · Traffic, Event & LPV',
+      rows: [
+        ['Impressions', fmt.n(d.meta.impr), `Largest campaign reach: ${fmt.n(metaReachMax)}`],
+        ['Link Clicks', fmt.n(d.meta.linkClicks), `CTR: ${ctr(d.meta.linkClicks, d.meta.impr)}`],
+        ['Landing Page Views', fmt.n(d.meta.lpv), `Cost per LPV: ${fmt.d((d.meta.spend - 150) / d.meta.lpv)}`],
+        ['Event Responses', fmt.n(d.meta.eventResponses), 'Event Ad · $0.80 each'],
+        ['Total Spend', fmt.d(d.meta.spend), `CPM: ${cpm(d.meta.spend, d.meta.impr)}`],
+      ], status: '🎯 Conversion driver' },
+    { cls: 'spotify', icon: '♪', name: 'Spotify', sub: 'Audio · Auction',
+      rows: [
+        ['Impressions', fmt.n(d.spotify.impr), 'Streamed audio'],
+        ['Streamed Reach', fmt.n(d.spotify.reach), `Frequency: ${d.spotify.freq.toFixed(2)}`],
+        ['Clicks', fmt.n(d.spotify.clicks), `CTR: ${ctr(d.spotify.clicks, d.spotify.impr)}`],
+        ['CPM', cpm(d.spotify.spend, d.spotify.impr), ''],
+        ['Total Spend', fmt.d(d.spotify.spend), '$1,275 lifetime budget'],
+      ], status: '🎧 Audio awareness' },
+    { cls: 'google', icon: 'G', name: 'Google Display', sub: 'Display campaign',
+      rows: [
+        ['Impressions', fmt.n(d.display.impr), 'Largest channel by volume'],
+        ['Clicks', fmt.n(d.display.clicks), `CTR: ${ctr(d.display.clicks, d.display.impr)}`],
+        ['Avg CPC', fmt.d(d.display.spend / d.display.clicks), ''],
+        ['CPM', cpm(d.display.spend, d.display.impr), 'Lowest CPM'],
+        ['Total Spend', fmt.d(d.display.spend), ''],
+      ], status: '🗺️ Reach engine' },
+    { cls: 'tiktok', icon: '♫', name: 'TikTok', sub: 'In-feed video',
+      rows: [
+        ['Impressions', fmt.n(d.tiktok.impr), ''],
+        ['Clicks', fmt.n(d.tiktok.clicks), `CTR: ${ctr(d.tiktok.clicks, d.tiktok.impr)}`],
+        ['Avg CPC', fmt.d(d.tiktok.spend / d.tiktok.clicks), ''],
+        ['CPM', cpm(d.tiktok.spend, d.tiktok.impr), ''],
+        ['Total Spend', fmt.d(d.tiktok.spend), 'Campaign budget fully spent'],
+      ], status: '📱 Efficient clicks' },
+  ];
+  document.getElementById('psu4827-cards').innerHTML = cards.map(ch => `<div class="platform-card">
+    <div class="card-header ${ch.cls}">
+      <div class="plat-icon">${ch.icon}</div>
+      <div><div class="plat-name">${ch.name}</div><div class="plat-sub">${ch.sub}</div></div>
+    </div>
+    <div class="card-body">
+      ${ch.rows.map(r => `<div class="metric-row"><span class="m-label">${r[0]}</span><span class="m-value">${r[1]}<span class="m-sub">${r[2]}</span></span></div>`).join('')}
+      <div style="margin-top:8px;font-size:11px;font-weight:700;color:var(--skc-navy)">${ch.status}</div>
+    </div>
+  </div>`).join('');
+
+  const row = (ch, plat, col, im, reach, cl, sp, key) => `<tr>
+    <td>${ch}</td><td style="color:${col};font-weight:600">${plat}</td>
+    <td>${fmt.n(im)}</td><td>${reach}</td><td>${fmt.n(cl)}</td><td>${ctr(cl, im)}</td><td>${cpm(sp, im)}</td><td>${fmt.d(sp)}</td><td>${key}</td></tr>`;
+  document.getElementById('psu4827-table').innerHTML = `<thead><tr>
+    <th>Channel</th><th>Platform</th><th>Impressions</th><th>Reach</th><th>Clicks</th><th>CTR</th><th>CPM</th><th>Spend</th><th>Key Metric</th>
+  </tr></thead><tbody>
+  ${d.meta.campaigns.map(c => row('Meta / Social', c.name.replace('Est. 4827 ', '').replace('– ', ''), 'var(--col-meta)', c.impr, fmt.n(c.reach), c.clicks, c.spend, `${c.result} · ${c.cpr}`)).join('')}
+  ${row('Audio', 'Spotify', 'var(--col-spotify)', d.spotify.impr, fmt.n(d.spotify.reach), d.spotify.clicks, d.spotify.spend, `${d.spotify.freq.toFixed(2)} frequency`)}
+  ${row('Display', 'Google Ads', 'var(--col-google)', d.display.impr, '—', d.display.clicks, d.display.spend, `${fmt.d(d.display.spend / d.display.clicks)} CPC`)}
+  ${row('Social Video', 'TikTok', 'var(--col-tiktok)', d.tiktok.impr, '—', d.tiktok.clicks, d.tiktok.spend, `${fmt.d(d.tiktok.spend / d.tiktok.clicks)} CPC`)}
+  <tr style="font-weight:800;background:var(--skc-light)">
+    <td>Total</td><td style="color:var(--skc-muted);font-weight:400">Full flight</td>
+    <td>${fmt.n(t.impr)}</td><td>—</td><td>${fmt.n(t.clicks)}</td><td>${ctr(t.clicks, t.impr)}</td><td>${cpm(t.spend, t.impr)}</td><td>${fmt.d(t.spend)}</td><td>${fmt.n(d.meta.lpv)} LPVs · ${d.meta.eventResponses} event responses</td>
+  </tr></tbody>`;
+
+  if (charts['psu4827']) charts['psu4827'].destroy();
+  const ctx = document.getElementById('chart-psu4827').getContext('2d');
+  const spends = [d.meta.spend, d.spotify.spend, d.display.spend, d.tiktok.spend];
+  charts['psu4827'] = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Meta', 'Spotify', 'Google Display', 'TikTok'].map((l, i) => `${l} (${fmt.d(spends[i])})`),
+      datasets: [{ data: spends,
+        backgroundColor: ['rgba(24,119,242,0.85)', 'rgba(29,185,84,0.85)', 'rgba(66,133,244,0.55)', 'rgba(1,1,1,0.85)'],
+        borderColor: ['#1877F2', '#1DB954', '#4285F4', '#010101'], borderWidth: 2 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' }, tooltip: { callbacks: { label: c => ` ${c.label}: ${((c.raw / t.spend) * 100).toFixed(1)}% of spend` } } } }
+  });
+}
+
 function renderAcademyChart() {
   if (charts['academy']) charts['academy'].destroy();
   const ctx = document.getElementById('chart-academy').getContext('2d');
@@ -1223,16 +1379,17 @@ function removeAd(section, idx) {
 // TAB & MONTH NAVIGATION
 // ─────────────────────────────────────────────
 function setTab(tab, btn) {
-  ['youth','argyle','academy'].forEach(t => {
+  ['youth','argyle','academy','psu4827'].forEach(t => {
     document.getElementById('tab-'+t).style.display = t === tab ? '' : 'none';
   });
   document.querySelectorAll('.tab-toggle button').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   currentTab = tab;
-  // Academy doesn't use month nav
+  // Academy and Est. 4827 are full-flight summaries — no month nav
+  const flightOnly = tab === 'academy' || tab === 'psu4827';
   const monthNav = document.querySelector('.month-nav');
-  monthNav.style.opacity = tab === 'academy' ? '0.4' : '1';
-  monthNav.style.pointerEvents = tab === 'academy' ? 'none' : '';
+  monthNav.style.opacity = flightOnly ? '0.4' : '1';
+  monthNav.style.pointerEvents = flightOnly ? 'none' : '';
 }
 
 function changeMonth(dir) {
@@ -1253,6 +1410,7 @@ function changeMonth(dir) {
 function renderCurrentTab() {
   if (currentTab === 'youth') renderYouth(currentMonthIdx);
   else if (currentTab === 'argyle') renderArgyle(currentMonthIdx);
+  else if (currentTab === 'psu4827') renderPsu4827();
   else renderAcademy();
 }
 
@@ -1305,9 +1463,11 @@ renderYouth(currentMonthIdx);
 // Pre-render other tabs' charts silently
 renderArgyle(currentMonthIdx);
 renderAcademy();
+renderPsu4827();
 // Show only youth
 document.getElementById('tab-argyle').style.display = 'none';
 document.getElementById('tab-academy').style.display = 'none';
+document.getElementById('tab-psu4827').style.display = 'none';
 </script>
 </body>
 </html>
